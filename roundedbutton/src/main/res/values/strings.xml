@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RoundedButton</string>
+    <string name="base_text">Send</string>
 </resources>

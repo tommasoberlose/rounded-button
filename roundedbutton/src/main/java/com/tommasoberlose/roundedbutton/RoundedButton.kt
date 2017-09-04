@@ -20,6 +20,9 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import android.content.res.TypedArray
+import android.support.annotation.StringRes
+
 
 /**
  * Created by tommaso on 04/08/17.
@@ -40,6 +43,7 @@ class RoundedButton : LinearLayout {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init(context)
+        initAttrs(attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
@@ -54,6 +58,20 @@ class RoundedButton : LinearLayout {
         View.inflate(context, R.layout.rounded_button_layout, this)
     }
 
+    fun initAttrs(attrs: AttributeSet?) {
+        val ta = context.obtainStyledAttributes(attrs, R.styleable.RoundedButton, 0, 0)
+        try {
+            setRounded(ta.getBoolean(R.styleable.RoundedButton_rounded, false))
+            setText(ta.getInt(R.styleable.RoundedButton_text, R.string.base_text))
+            setButtonTextColor(ta.getColor(R.styleable.RoundedButton_textColor, ContextCompat.getColor(context, android.R.color.white)))
+            setBackgroundColor(ta.getColor(R.styleable.RoundedButton_backgroundColor, ContextCompat.getColor(context, android.R.color.holo_blue_dark)))
+            setProgressBarColor(ta.getColor(R.styleable.RoundedButton_progressBarColor, ContextCompat.getColor(context, android.R.color.white)))
+            setButtonTextAllCaps(ta.getBoolean(R.styleable.RoundedButton_allCaps, true))
+        } finally {
+            ta.recycle()
+        }
+    }
+
     override fun onFinishInflate() {
         super.onFinishInflate()
         button = findViewById(R.id.card)
@@ -66,7 +84,6 @@ class RoundedButton : LinearLayout {
         if (rounded) {
             button.radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, resources.displayMetrics);
         } else {
-            Toast.makeText(this.context, "BOH2: " + button.radius, Toast.LENGTH_SHORT).show()
             button.radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, resources.displayMetrics);
         }
     }
@@ -97,8 +114,8 @@ class RoundedButton : LinearLayout {
 
     /* ProgressBar Settings*/
 
-    fun setProgressBarColor(@ColorRes color: Int) {
-        loader.indeterminateDrawable.setColorFilter(ContextCompat.getColor(this.context, color), PorterDuff.Mode.MULTIPLY)
+    fun setProgressBarColor(color: Int) {
+        loader.indeterminateDrawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
     }
 
 
@@ -120,11 +137,11 @@ class RoundedButton : LinearLayout {
         this.text.setText(text, type)
     }
 
-    fun setText(resid: Int) {
+    fun setText(@StringRes resid: Int) {
         this.text.setText(resid)
     }
 
-    fun setText(resid: Int, type: TextView.BufferType) {
+    fun setText(@StringRes resid: Int, type: TextView.BufferType) {
         this.text.setText(resid, type)
     }
 

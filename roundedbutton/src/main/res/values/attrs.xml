@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <declare-styleable name="RoundedButton">
+        <attr name="backgroundColor" format="color"/>
+        <attr name="rounded" format="boolean"/>
+        <attr name="text" format="string"/>
+        <attr name="loading" format="boolean"/>
+        <attr name="progressBarColor" format="color"/>
+        <attr name="textColor" format="color"/>
+        <attr name="allCaps" format="boolean"/>
+    </declare-styleable>
+</resources>
